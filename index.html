@@ -1,0 +1,228 @@
+<!DOCTYPE html> 
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conceptos UML y Requerimientos</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.1/sweetalert2.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bubble {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 4s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0);
+            }
+            100% {
+                transform: translateY(-10vh) scale(1);
+            }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            z-index: 1;
+        }
+
+        .title {
+            color: white;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            margin-bottom: 15px;
+            color: #4CAF50;
+        }
+
+        .bounce-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin: 10px 0;
+            font-size: 1em;
+        }
+
+        .bounce-button:hover {
+            animation: bounce 0.5s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .description {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Conceptos de UML y Requerimientos</h1>
+        
+        <div class="card">
+            <h2>Casos de Uso</h2>
+            <p class="description">Representación de las interacciones del sistema con actores externos.</p>
+            <button class="bounce-button" onclick="showInfo('casos')">Más Información</button>
+        </div>
+
+        <div class="card">
+            <h2>Programación Orientada a Objetos</h2>
+            <p class="description">Paradigma de programación basado en objetos y clases.</p>
+            <button class="bounce-button" onclick="showInfo('poo')">Más Información</button>
+        </div>
+
+        <div class="card">
+            <h2>Diagrama de Despliegue</h2>
+            <p class="description">Visualización de la arquitectura física del sistema.</p>
+            <button class="bounce-button" onclick="showInfo('despliegue')">Más Información</button>
+        </div>
+
+        <div class="card">
+            <h2>Recolección de Requerimientos</h2>
+            <p class="description">Técnicas utilizadas para recopilar los requerimientos de software.</p>
+            <button class="bounce-button" onclick="showInfo('requerimientos')">Más Información</button>
+        </div>
+
+        <div class="card">
+            <h2>Gestión de Requerimientos</h2>
+            <p class="description">Herramientas utilizadas para gestionar los requerimientos de un proyecto.</p>
+            <button class="bounce-button" onclick="showInfo('gestion')">Más Información</button>
+        </div>
+
+        <div class="card">
+            <h2>Especificación de Requisitos de Software (SRS)</h2>
+            <p class="description">Principios clave para redactar una SRS clara y específica.</p>
+            <button class="bounce-button" onclick="showInfo('srs')">Más Información</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.1/sweetalert2.all.min.js"></script>
+    <script>
+        // Crear burbujas
+        function createBubbles() {
+            const body = document.querySelector('body');
+            for (let i = 0; i < 50; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                
+                // Posición aleatoria
+                const left = Math.random() * 100;
+                const size = Math.random() * 30 + 10;
+                const animationDuration = Math.random() * 4 + 2;
+                
+                bubble.style.left = left + 'vw';
+                bubble.style.width = size + 'px';
+                bubble.style.height = size + 'px';
+                bubble.style.animationDuration = animationDuration + 's';
+                bubble.style.opacity = Math.random() * 0.5;
+                
+                body.appendChild(bubble);
+                
+                // Remover y recrear burbuja cuando termine la animación
+                bubble.addEventListener('animationend', () => {
+                    bubble.remove();
+                    createBubbles();
+                });
+            }
+        }
+
+        // Información para los alerts
+        const info = {
+            casos: {
+                title: 'Casos de Uso',
+                html: `<div style="text-align: left"><p><strong>Definición:</strong> Los casos de uso son una técnica de modelado que describe las interacciones entre usuarios y sistema.</p></div>`
+            },
+            poo: {
+                title: 'Programación Orientada a Objetos',
+                html: `<div style="text-align: left"><p><strong>Conceptos:</strong> Clases, objetos, encapsulamiento, herencia y polimorfismo.</p></div>`
+            },
+            despliegue: {
+                title: 'Diagrama de Despliegue',
+                html: `<div style="text-align: left"><p><strong>Características:</strong> Representa nodos y componentes de software y hardware.</p></div>`
+            },
+            requerimientos: {
+                title: 'Recolección de Requerimientos',
+                html: `<div style="text-align: left"><p><strong>Técnicas:</strong> Entrevistas, talleres, focus groups, observación, encuestas y análisis de documentos.</p></div>`
+            },
+            gestion: {
+                title: 'Gestión de Requerimientos',
+                html: `<div style="text-align: left"><p><strong>Herramientas:</strong> Jira, IBM PUERTAS, Excel, Sparx EA, GitLab, Azure DevOps.</p></div>`
+            },
+            srs: {
+                title: 'Especificación de Requisitos de Software (SRS)',
+                html: `<div style="text-align: left"><p><strong>Puntos clave:</strong> Refleja la funcionalidad del producto, debe ser específico y claro.</p></div>`
+            }
+        };
+
+        // Función para mostrar la información
+        function showInfo(type) {
+            Swal.fire({
+                title: info[type].title,
+                html: info[type].html,
+                confirmButtonText: 'Entendido',
+                confirmButtonColor: '#4CAF50',
+                background: '#333',
+                color: '#fff',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            });
+        }
+
+        // Iniciar las burbujas cuando carga la página
+        document.addEventListener('DOMContentLoaded', createBubbles);
+    </script>
+</body>
+</html>
